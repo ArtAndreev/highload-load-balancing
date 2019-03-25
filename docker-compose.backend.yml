@@ -1,0 +1,27 @@
+version: "3"
+services:
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter 
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+    user: root
+    privileged: true
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+
+  forum:
+    image: theartyom/forum
+    container_name: forum
+    ports: 
+      - "5000:5000"
+    # volumes:
+    environment:
+      - METRICS_NS=backend1
