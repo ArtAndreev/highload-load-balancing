@@ -38,6 +38,13 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
       - GF_USERS_ALLOW_SIGN_UP=false
 
+  nginx-prometheus-exporter:
+    image: nginx/nginx-prometheus-exporter
+    ports:
+      - "9113:9113"
+    command:
+      - -nginx.scrape-uri http://134.209.86.63:8080/stub_status
+
 volumes:
   prometheus_data:
   grafana_data:
