@@ -39,11 +39,13 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
 
   nginx-prometheus-exporter:
-    image: nginx/nginx-prometheus-exporter
+    image: nginx/nginx-prometheus-exporter:0.3.0
     ports:
       - "9113:9113"
-    command:
-      - -nginx.scrape-uri http://134.209.86.63:8080/stub_status
+    environment:
+      - SCRAPE_URI=http://134.209.86.63:8080/stub_status
+    # command:
+    #   - -nginx.scrape-uri http://134.209.86.63:8080/stub_status
 
 volumes:
   prometheus_data:
